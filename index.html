@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>認定NPO法人 Bring Up Japan - 認定NPO法人Bring Up Japan</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* ===== 기본 설정 ===== */
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        html {scroll-behavior: smooth;}
+        body {
+            font-family: 'Segoe UI', 'Noto Sans JP', sans-serif;
+            overflow-x: hidden;
+            background: #0a0e27;
+            color: #333;
+        }
+
+        /* ===== 배경 애니메이션 ===== */
+        .background-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0; left: 0;
+            z-index: -1;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1729 100%);
+            overflow: hidden;
+        }
+        .blob {
+            position: absolute;
+            opacity: 0.3;
+            filter: blur(40px);
+            animation: float 8s infinite ease-in-out;
+        }
+        .blob-1 {
+            width: 400px; height: 400px;
+            background: linear-gradient(135deg, #FF6B9D, #C44569);
+            top: -200px; left: -200px;
+        }
+        .blob-2 {
+            width: 300px; height: 300px;
+            background: linear-gradient(135deg, #00D4FF, #0099FF);
+            bottom: -150px; right: -150px;
+            animation-duration: 10s;
+        }
+        .blob-3 {
+            width: 350px; height: 350px;
+            background: linear-gradient(135deg, #00FF88, #00CC44);
+            top: 50%; right: -100px;
+            animation-duration: 9s;
+        }
+        @keyframes float {
+            0%, 100% {transform: translate(0, 0) rotate(0deg);}
+            33% {transform: translate(30px, -50px) rotate(120deg);}
+            66% {transform: translate(-20px, 20px) rotate(240deg);}
+        }
+
+        /* ===== 네비게이션 ===== */
+        nav {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 1.5rem 2rem;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(20px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #FF6B9D, #00D4FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+        }
+        .logo-sub {
+            font-size: 0.65rem;
+            color: #aaa;
+            margin-bottom: 0.1rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            position: relative;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #FF6B9D, #00D4FF);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after, .nav-links a.active::after {width: 100%;}
+        .menu-toggle {display: none; color: white; font-size: 1.5rem; background: none; border: none; cursor: pointer; z-index: 1001; padding: 0.5rem;}
+
+        @media (max-width:768px){
+            .nav-links {display:none; flex-direction:column; position:absolute; top:70px; left:0; right:0; background:rgba(10,14,39,0.98); padding: 1rem 0;}
+            .nav-links.active {display:flex;}
+            .nav-links li {padding: 0.5rem 2rem;}
+            .menu-toggle {display:block;}
+            .logo {font-size: 1rem;}
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding-top: 80px;
+        }
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #FF6B9D, #00D4FF, #00FF88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: #00D4FF;
+            margin-bottom: 0.5rem;
+        }
+        .hero-tagline {
+            font-size: 0.95rem;
+            color: #aaa;
+            margin-bottom: 2rem;
+        }
+        .cta-buttons {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            border: 2px solid #00D4FF;
+            background: transparent;
+            color: #00D4FF;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #FF6B9D, #FF1493);
+            color: #fff;
+            border: none;
+        }
+        .btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
+        }
+
+        /* ===== SECTION 기본 ===== */
+        .section {
+            display: none;
+            padding: 6rem 2rem;
+            color: white;
+            min-height: 100vh;
+        }
+        .section.active {display: block;}
+        .section-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #FF6B9D, #00D4FF, #00FF88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .container p {
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+            color: #ddd;
+        }
+
+        /* ===== 프로그램 카드 ===== */
+        .program-card {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        .program-card:hover {
+            background: rgba(255, 107, 157, 0.1);
+            border-color: rgba(255, 107, 157, 0.3);
+            transform: translateY(-5px);
+        }
+        .program-card h3 {
+            color: #00D4FF;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+        .program-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .info-item {
+            font-size: 0.95rem;
+        }
+        .info-item strong {color: #00FF88;}
+
+        /* ===== 이미지 갤러리 ===== */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .gallery-image {
+            width: 100%;
+            height: 200px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 2px solid rgba(0, 212, 255, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .gallery-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ===== 타임라인 ===== */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+        .timeline-item {
+            margin-bottom: 2rem;
+            padding-left: 3rem;
+            position: relative;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #FF6B9D, #00D4FF);
+            border-radius: 50%;
+            border: 3px solid #0a0e27;
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 30px;
+            width: 3px;
+            height: calc(100% + 20px);
+            background: rgba(0, 212, 255, 0.3);
+        }
+        .timeline-item:last-child::after {display: none;}
+        .timeline-date {
+            color: #00FF88;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .timeline-content {
+            color: #ddd;
+            line-height: 1.6;
+        }
+
+        /* ===== 연락처 ===== */
+        .contact-info {
+            background: rgba(0, 212, 255, 0.1);
+            border-left: 4px solid #00D4FF;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+        }
+        .contact-info p {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .contact-info i {
+            color: #00FF88;
+            width: 30px;
+            font-size: 1.2rem;
+        }
+
+        /* ===== 뉴스 카드 ===== */
+        .news-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-left: 4px solid #FF6B9D;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        .news-card:hover {
+            background: rgba(255, 107, 157, 0.15);
+            transform: translateX(10px);
+        }
+        .news-date {
+            color: #00D4FF;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .news-title {
+            color: #00FF88;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+        .news-content {
+            color: #ddd;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+        .news-details {
+            color: #aaa;
+            font-size: 0.9rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        /* ===== 지도 섹션 ===== */
+        .access-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+        .access-info {
+            flex: 1;
+        }
+        .map-container {
+            width: 100%;
+            height: 400px;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid rgba(0, 212, 255, 0.2);
+        }
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #050811;
+            color: #ccc;
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        footer h3 {
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #FF6B9D, #00D4FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        footer p {
+            margin: 0.5rem 0;
+        }
+        .social-links {
+            margin-top: 1.5rem;
+        }
+        .social-links a {
+            color: #00D4FF;
+            margin: 0 1rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .social-links a:hover {
+            color: #FF6B9D;
+        }
+
+        @media(max-width:768px){
+            .hero h1{font-size: 2.5rem;}
+            .hero-subtitle{font-size: 1rem;}
+            .section-title{font-size: 2rem;}
+            .section {padding: 4rem 1.5rem;}
+            .program-info {grid-template-columns: 1fr;}
+            .cta-buttons {flex-direction: column;}
+            .btn {width: 100%;}
+            .access-layout {grid-template-columns: 1fr;}
+            .map-container {height: 300px;}
+            .image-gallery {grid-template-columns: 1fr;}
+        }
+    </style>
+</head>
+<body>
+    <div class="background-animation">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <nav>
+        <div class="logo">
+            <div class="logo-sub">特定非営利活動法人</div>
+            Bring Up Japan
+        </div>
+        <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+        <ul class="nav-links">
+            <li><a href="#home" onclick="showSection('home'); return false;">ホーム</a></li>
+            <li><a href="#about" onclick="showSection('about'); return false;">紹介</a></li>
+            <li><a href="#history" onclick="showSection('history'); return false;">沿革</a></li>
+            <li><a href="#activities" onclick="showSection('activities'); return false;">活動</a></li>
+            <li><a href="#join" onclick="showSection('join'); return false;">参加方法</a></li>
+            <li><a href="#news" onclick="showSection('news'); return false;">お知らせ</a></li>
+            <li><a href="#access" onclick="showSection('access'); return false;">アクセス</a></li>
+        </ul>
+    </nav>
+
+    <!-- ===== HERO ===== -->
+    <section id="home" class="section active hero">
+        <h1>認定NPO法人<br>Bring Up Japan</h1>
+        <p class="hero-subtitle">一緒に造る温かい地域社会</p>
+        <p class="hero-tagline">子どもから高齢者まで、すべての人のために</p>
+        <div class="cta-buttons">
+            <a href="#about" class="btn btn-primary" onclick="showSection('about'); return false;">紹介を見る</a>
+            <a href="#join" class="btn" onclick="showSection('join'); return false;">参加する</a>
+        </div>
+    </section>
+
+    <!-- ===== ABOUT ===== -->
+    <section id="about" class="section">
+        <h2 class="section-title">私たちについて</h2>
+        <div class="container">
+            <p>私たちBring Up Japanは、34か国で活動するBring Up Internationalの日本支部として、2019年4月にスタートしました。2023年6月4日に事業本部として発足され、2025年6月2日に「認定NPO法人Bring Up Japan」として正式に登録されました。</p>
+            
+            <p>地域共同体の復興と温かい分かち合いを実践するために、日本全国の恵まれない地域に住む人々に仕えています。教育・文化・ケア活動を通じて、地域の住民たちの笑顔を見るように励んでいます。</p>
+            
+            <p>2023年3月からグレース子ども食堂として再開した活動を皮切りに、グレース・シルバーサロン、ママCaféグレース、グレース・ロボキャンプ、ホームレス支援活動など、様々な事業を展開しています。</p>
+            
+            <p>私たちは、夢を見る人、考える人の行動を待っています。ボランティアを随時募集しています。</p>
+        </div>
+    </section>
+
+    <!-- ===== HISTORY ===== -->
+    <section id="history" class="section">
+        <h2 class="section-title">沿革</h2>
+        <div class="container">
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">2019年4月</div>
+                    <div class="timeline-content">韓国社団法人Bring Up Internationalの協力国としてスタート</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2023年3月7日</div>
+                    <div class="timeline-content">グレース子ども食堂がスタート</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2023年6月4日</div>
+                    <div class="timeline-content">事業本部として発足<br>事業本部長：朴斗熙 フィールドマネージャー：横山ゆり</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2023年9月7日</div>
+                    <div class="timeline-content">グレース・シルバーサロンがスタート</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2024年11月20日</div>
+                    <div class="timeline-content">ママCaféグレースがスタート</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2025年6月2日</div>
+                    <div class="timeline-content">特定非営利活動法人Bring Up Japanとして承認</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2025年9月23日</div>
+                    <div class="timeline-content">第1回グレース・ロボキャンプを実施</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ACTIVITIES ===== -->
+    <section id="activities" class="section">
+        <h2 class="section-title">主な活動</h2>
+        <div class="container">
+            <div class="program-card">
+                <h3><i class="fas fa-utensils"></i> グレース子ども食堂</h3>
+                <div class="program-info">
+                    <div class="info-item"><strong>頻度:</strong> 毎月1回 第2週目火曜日</div>
+                    <div class="info-item"><strong>時間:</strong> PM 6:00～7:30</div>
+                    <div class="info-item"><strong>参加費:</strong> 中学生以下無料、高校生以上300円</div>
+                </div>
+                <p>内容：食事、マジックショーまたはお楽しみ会。帰りに手土産がある場合もあります。</p>
+                <div class="image-gallery">
+                    <div class="gallery-image" id="img-001"></div>
+                    <div class="gallery-image" id="img-002"></div>
+                </div>
+            </div>
+
+            <div class="program-card">
+                <h3><i class="fas fa-users"></i> グレース・シルバーサロン</h3>
+                <div class="program-info">
+                    <div class="info-item"><strong>頻度:</strong> 毎月2回 第1、3週目木曜日</div>
+                    <div class="info-item"><strong>時間:</strong> PM 1:30～3:00</div>
+                    <div class="info-item"><strong>参加費:</strong> 200円（お茶菓子提供）</div>
+                </div>
+                <p>内容：健康体操、脳トレーニング、クラフト、回想法など。福祉会館から認知予防リーダーが派遣されます。</p>
+                <div class="image-gallery">
+                    <div class="gallery-image" id="img-003"></div>
+                    <div class="gallery-image" id="img-004"></div>
+                </div>
+            </div>
+
+            <div class="program-card">
+                <h3><i class="fas fa-coffee"></i> ママCaféグレース</h3>
+                <div class="program-info">
+                    <div class="info-item"><strong>頻度:</strong> 年4回 水曜日</div>
+                    <div class="info-item"><strong>時間:</strong> AM 11:30～PM 2:00</div>
+                    <div class="info-item"><strong>参加費:</strong> 300円</div>
+                </div>
+                <p>内容：食事、ちょっとした活動。トーク、ミニバザー、クラフトなど。近隣のお母さんたちがママ友になり、情報交換ができます。</p>
+                <div class="image-gallery">
+                    <div class="gallery-image" id="img-005"></div>
+                    <div class="gallery-image" id="img-006"></div>
+                </div>
+            </div>
+
+            <div class="program-card">
+                <h3><i class="fas fa-robot"></i> グレース・ロボキャンプ</h3>
+                <div class="program-info">
+                    <div class="info-item"><strong>対象:</strong> 小学4年生～中学生</div>
+                </div>
+                <p>内容：自分でロボットを組み立てて、パソコンでプログラミングをし、実際に動かして見る。</p>
+                <div class="image-gallery">
+                    <div class="gallery-image" id="img-007"></div>
+                    <div class="gallery-image" id="img-008"></div>
+                </div>
+            </div>
+
+            <div class="program-card">
+                <h3><i class="fas fa-heart"></i> ホームレス支援活動</h3>
+                <div class="program-info">
+                    <div class="info-item"><strong>景雲橋:</strong> 年2回（イースター＆12月）</div>
+                    <div class="info-item"><strong>名古屋市:</strong> 越冬委員会活動支援（12月末）</div>
+                </div>
+                <p>内容：地域でホームレスのために働いているところを協力、支援しています。</p>
+                <div class="image-gallery">
+                    <div class="gallery-image" id="img-009"></div>
+                    <div class="gallery-image" id="img-010"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== JOIN ===== -->
+    <section id="join" class="section">
+        <h2 class="section-title">参加方法</h2>
+        <div class="container">
+            <p>私たちの活動に参加する方法はいくつかあります。自分のやり方で貢献してください。</p>
+            
+            <div class="program-card">
+                <h3><i class="fas fa-hands-helping"></i> ボランティアとして</h3>
+                <p>各行事にはボランティアの協力を求めています。私たちと一緒に地域に仕えましょう。</p>
+            </div>
+
+            <div class="program-card">
+                <h3><i class="fas fa-donate"></i> 支援金</h3>
+                <p>私たちの活動に賛同される方からの支援を随時いただいています。皆様のご支援が活動を支えています。</p>
+            </div>
+
+            <div class="program-card">
+                <h3><i class="fas fa-gift"></i> 共にとも（共に分かち合う）</h3>
+                <p>誕生日、合格、結婚記念日、昇進、卒業などのお祝い事の際に、その喜びを他者のために使うことができます。例えば、自分の誕生日を記念してグレース子ども食堂に一部を寄付するなど、創意工夫で貢献できます。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== NEWS ===== -->
+    <section id="news" class="section">
+        <h2 class="section-title">お知らせ</h2>
+        <div class="container">
+            <div class="news-card">
+                <div class="news-date">2025年10月22日</div>
+                <h3 class="news-title"><i class="fas fa-bell"></i> 第5回 ママCaféグレース開催</h3>
+                <p class="news-content">今月のママCaféグレースを開催いたします。近隣のお母さんたちとの交流と情報交換の場として、皆様のご参加をお待ちしています。</p>
+                <div class="news-details">
+                    <span><strong>時間：</strong> AM 11:30～PM 2:00</span> | 
+                    <span><strong>参加費：</strong> 300円</span>
+                </div>
+            </div>
+
+            <div class="news-card">
+                <div class="news-date">2025年10月14日</div>
+                <h3 class="news-title"><i class="fas fa-bell"></i> グレース子ども食堂 10月実施</h3>
+                <p class="news-content">10月の子ども食堂を実施いたします。お友達と一緒に、美味しい食事とお楽しみ会をご楽しみください。手土産もご用意しています。</p>
+                <div class="news-details">
+                    <span><strong>時間：</strong> PM 6:00～7:30</span> | 
+                    <span><strong>参加費：</strong> 中学生以下無料、高校生以上300円</span>
+                </div>
+            </div>
+
+            <div class="news-card">
+                <div class="news-date">2025年10月9日</div>
+                <h3 class="news-title"><i class="fas fa-bell"></i> グレース・シルバーサロン 10月実施</h3>
+                <p class="news-content">10月のシルバーサロンを開催いたします。健康体操や脳トレーニングなど、楽しい活動を予定しています。お気軽にご参加ください。</p>
+                <div class="news-details">
+                    <span><strong>時間：</strong> PM 1:30～3:00</span> | 
+                    <span><strong>参加費：</strong> 200円（お茶菓子提供）</span>
+                </div>
+            </div>
+
+            <div class="news-card">
+                <div class="news-date">2025年9月23日</div>
+                <h3 class="news-title"><i class="fas fa-trophy"></i> グレース・ロボキャンプ 開催完了</h3>
+                <p class="news-content">第1回グレース・ロボキャンプが無事終了いたしました。参加いただいた児童の皆さん、保護者の皆さん、ありがとうございました。次回開催予定もお楽しみに。</p>
+            </div>
+
+            <div class="news-card">
+                <div class="news-date">2025年6月2日</div>
+                <h3 class="news-title"><i class="fas fa-certificate"></i> 認定NPO法人認定取得</h3>
+                <p class="news-content">特定非営利活動法人Bring Up Japanが認定NPO法人として正式に登録されました。引き続き、地域社会への貢献に努めてまいります。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ACCESS ===== -->
+    <section id="access" class="section">
+        <h2 class="section-title">アクセス</h2>
+        <div class="container">
+            <div class="access-layout">
+                <div class="access-info">
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt"></i><strong>住所:</strong> 〒464-0076 愛知県名古屋市千種区豊年町８－３</p>
+                        <p><i class="fas fa-phone"></i><strong>電話:</strong> 052-890-2174</p>
+                        <p><i class="fas fa-envelope"></i><strong>メール:</strong> nihonski@gmail.com</p>
+                        <p><i class="fas fa-user"></i><strong>担当者:</strong> 横山ゆり</p>
+                    </div>
+
+                    <h3 style="color: #00D4FF; margin-top: 2rem; margin-bottom: 1rem;">交通アクセス</h3>
+                    <p><i class="fas fa-train" style="color: #00FF88; margin-right: 1rem;"></i><strong>JR千種駅</strong> 3番出口から北方向へ徒歩15分</p>
+                    <p><i class="fas fa-train" style="color: #00FF88; margin-right: 1rem;"></i><strong>地下鉄東山線千種駅</strong> 3番出口から北方向へ徒歩15分</p>
+                    <p><i class="fas fa-train" style="color: #00FF88; margin-right: 1rem;"></i><strong>地下鉄東山線今池駅</strong> 1番出口から北方向へ徒歩15分</p>
+
+                    <h3 style="color: #00D4FF; margin-top: 2rem; margin-bottom: 1rem;">リンク</h3>
+                    <p><a href="https://www.facebook.com/groups/bringupjapan" target="_blank" style="color: #00D4FF; text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='#FF6B9D'" onmouseout="this.style.color='#00D4FF'"><i class="fab fa-facebook"></i> Facebook グループを見る</a></p>
+                </div>
+
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3260.862783890234!2d136.92649!3d35.16472!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6003774e0e0e0e0f%3A0x4a4e4a4a4a4a4a4a!2z44K544OV44Kv44Op44K_44O844K_!5e0!3m2!1sja!2sjp!4v1234567890" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <h3>認定NPO法人 Bring Up Japan</h3>
+        <p>一緒に造る温かい地域社会</p>
+        <p>子どもから高齢者まで、すべての人のために</p>
+        <p>© 2025 Bring Up Japan. All rights reserved.</p>
+        <div class="social-links">
+            <a href="https://www.facebook.com/groups/bringupjapan" target="_blank"><i class="fab fa-facebook"></i></a>
+        </div>
+    </footer>
+
+    <script>
+        // 메뉴 토글 (모바일)
+        const menuToggle = document.querySelector(".menu-toggle");
+        const navLinks = document.querySelector(".nav-links");
+        
+        menuToggle.addEventListener("click", () => {
+            navLinks.classList.toggle("active");
+        });
+
+        // 섹션 전환
+        function showSection(id) {
+            document.querySelectorAll(".section").forEach(sec => sec.classList.remove("active"));
+            document.getElementById(id).classList.add("active");
+            document.querySelectorAll(".nav-links a").forEach(a => a.classList.remove("active"));
+            
+            // 활성 링크 추적
+            const activeLink = document.querySelector(`.nav-links a[href="#${id}"]`);
+            if (activeLink) {
+                activeLink.classList.add("active");
+            }
+            
+            navLinks.classList.remove("active");
+            window.scrollTo(0, 0);
+        }
+
+        // 페이지 로드 시 초기화
+        document.addEventListener("DOMContentLoaded", () => {
+            showSection('home');
+        });
+    </script>
+
+<!-- ===== JSON-driven rendering for Activities & News ===== -->
+<script>
+(async function(){
+  async function loadDataAndRender() {
+    try {
+      const res = await fetch('buj-data.json', { cache: 'no-store' });
+      if (!res.ok) throw new Error('buj-data.json not found');
+      const data = await res.json();
+      renderActivitiesFromJSON(data.activities || []);
+      renderNewsFromJSON(data.news || []);
+    } catch (e) {
+      console.warn('[BUJ] JSON load skipped:', e.message);
+    }
+  }
+
+  function renderActivitiesFromJSON(items){
+    const section = document.querySelector('#activities .container');
+    if (!section) return;
+    // Remove existing cards to avoid duplication
+    section.querySelectorAll('.program-card').forEach(el => el.remove());
+
+    items.forEach(act => {
+      const card = document.createElement('div');
+      card.className = 'program-card';
+
+      const h3 = document.createElement('h3');
+      const icon = document.createElement('i');
+      icon.className = 'fas ' + (act.icon || 'fa-circle-info');
+      h3.appendChild(icon);
+      h3.insertAdjacentText('beforeend', ' ' + (act.title || ''));
+      card.appendChild(h3);
+
+      const info = document.createElement('div');
+      info.className = 'program-info';
+      if (act.details && typeof act.details === 'object') {
+        Object.entries(act.details).forEach(([k,v])=>{
+          const item = document.createElement('div');
+          item.className = 'info-item';
+          item.innerHTML = '<strong>' + k + ':</strong> ' + v;
+          info.appendChild(item);
+        });
+      }
+      card.appendChild(info);
+
+      if (act.content){
+        const p = document.createElement('p');
+        p.textContent = act.content;
+        card.appendChild(p);
+      }
+
+      const gal = document.createElement('div');
+      gal.className = 'image-gallery';
+      (act.images || []).forEach(id=>{
+        const wrap = document.createElement('div');
+        wrap.className = 'gallery-image';
+        wrap.id = id;
+        gal.appendChild(wrap);
+      });
+      card.appendChild(gal);
+
+      section.appendChild(card);
+    });
+  }
+
+  function renderNewsFromJSON(items){
+    const section = document.querySelector('#news .container');
+    if (!section) return;
+    section.querySelectorAll('.news-card').forEach(el => el.remove());
+
+    items.forEach(n=>{
+      const card = document.createElement('div');
+      card.className = 'news-card';
+
+      if (n.date){
+        const d = document.createElement('div');
+        d.className = 'news-date';
+        d.textContent = String(n.date).replace(/-/g,'/');
+        card.appendChild(d);
+      }
+
+      const h3 = document.createElement('h3');
+      h3.className = 'news-title';
+      const bell = document.createElement('i');
+      bell.className = 'fas fa-bell';
+      h3.appendChild(bell);
+      h3.insertAdjacentText('beforeend', ' ' + (n.title || ''));
+      card.appendChild(h3);
+
+      if (n.content){
+        const p = document.createElement('p');
+        p.className = 'news-content';
+        p.textContent = n.content;
+        card.appendChild(p);
+      }
+
+      if (n.time || n.fee){
+        const det = document.createElement('div');
+        det.className = 'news-details';
+        const parts = [];
+        if (n.time) parts.push('<span><strong>時間：</strong> ' + n.time + '</span>');
+        if (n.fee)  parts.push('<span><strong>参加費：</strong> ' + n.fee + '</span>');
+        det.innerHTML = parts.join(' | ');
+        card.appendChild(det);
+      }
+
+      section.appendChild(card);
+    });
+  }
+
+  // Run after page load
+  document.addEventListener('DOMContentLoaded', loadDataAndRender);
+})();
+</script>
+
+</body>
+</html>
