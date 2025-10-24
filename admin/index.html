@@ -1,56 +1,11 @@
 <!doctype html>
 <html lang="ja">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Bring Up Japan</title>
-  <style>
-    body { font-family: sans-serif; margin: 2em; }
-    article { border-bottom: 1px solid #ccc; padding: 1em 0; }
-    img { max-width: 100%; margin: 8px 0; border-radius: 8px; }
-    h3 { margin-bottom: 0; }
-    small { color: #555; }
-  </style>
-</head>
-<body>
-  <h1>お知らせ</h1>
-  <div id="news"></div>
-
-  <script>
-  async function renderNews() {
-    const res = await fetch('buj-data.json', {cache:'no-store'});
-    const data = await res.json();
-    const newsList = data.news || [];
-    const root = document.querySelector('#news');
-
-    if (!newsList.length) {
-      root.innerHTML = "<p>現在お知らせはありません。</p>";
-      return;
-    }
-
-    newsList.forEach(n => {
-      const article = document.createElement('article');
-      article.innerHTML = `
-        <h3>${n.title}</h3>
-        <p><small>${n.date}</small></p>
-        <div>${n.content || ''}</div>
-      `;
-      // 이미지가 있으면 표시
-      if (Array.isArray(n.images)) {
-        n.images.forEach(it => {
-          const src = typeof it === 'string' ? it : it.image;
-          if (src) {
-            const img = document.createElement('img');
-            img.src = src;
-            img.alt = n.title;
-            article.appendChild(img);
-          }
-        });
-      }
-      root.appendChild(article);
-    });
-  }
-  renderNews();
-  </script>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Content Manager</title>
+  </head>
+  <body>
+    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  </body>
 </html>
