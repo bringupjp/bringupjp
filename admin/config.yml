@@ -56,6 +56,7 @@ collections:
               - { label: "時間", name: "time", widget: "string", required: false }
               - { label: "参加費", name: "fee", widget: "string", required: false }
               - { label: "本文", name: "content", widget: "text" }
+              - { label: "画像", name: "image", widget: "image", required: false}
           - label: "Access"
             name: "access"
             widget: "object"
