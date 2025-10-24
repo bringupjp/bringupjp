@@ -37,34 +37,25 @@ collections:
             widget: "list"
             fields:
               - { label: "タイトル", name: "title", widget: "string" }
-              - { label: "本文", name: "content", widget: "text", required: false }
-              - label: "画像"
-                name: "images"
+              - { label: "FontAwesome アイコン (fa-xxx)", name: "icon", widget: "string", required: false }
+              - label: "詳細"
+                name: "details"
                 widget: "list"
-                required: false
-                field:
-                  label: "画像"
-                  name: "image"
-                  widget: "image"
-
-          # ✅ お知らせ 게시판 설정
+                summary: "{{fields.key}}: {{fields.value}}"
+                fields:
+                  - {label: "キー", name: "key", widget: "string"}
+                  - {label: "値", name: "value", widget: "string"}
+              - { label: "本文", name: "content", widget: "text", required: false }
+              - { label: "画像ID (img-001 等)", name: "images", widget: "list", field: {label: "ID", name: "id", widget: "string"}, required: false }
           - label: "News (お知らせ)"
             name: "news"
             widget: "list"
-            summary: "{{fields.date}} - {{fields.title}}"
             fields:
-              - { label: "日付 (YYYY-MM-DD)", name: "date", widget: "string" }
+              - { label: "日付(YYYY-MM-DD)", name: "date", widget: "string" }
               - { label: "タイトル", name: "title", widget: "string" }
-              - { label: "本文", name: "content", widget: "markdown" }
-              - label: "画像"
-                name: "images"
-                widget: "list"
-                required: false
-                field:
-                  label: "画像"
-                  name: "image"
-                  widget: "image"
-
+              - { label: "時間", name: "time", widget: "string", required: false }
+              - { label: "参加費", name: "fee", widget: "string", required: false }
+              - { label: "本文", name: "content", widget: "text" }
           - label: "Access"
             name: "access"
             widget: "object"
