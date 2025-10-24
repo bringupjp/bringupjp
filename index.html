@@ -837,6 +837,28 @@
   document.addEventListener('DOMContentLoaded', loadDataAndRender);
 })();
 </script>
+<h1>お知らせ</h1>
+<div id="news"></div>
+
+<script>
+(async () => {
+  const prefix = (location.pathname.match(/^\/[^/]+\//) || ['/'])[0];
+  const res = await fetch(`${prefix}buj-data.json`, {cache: 'no-store'});
+  const data = await res.json();
+  const root = document.querySelector('#news');
+  (data.news || []).forEach(n => {
+    const el = document.createElement('article');
+    el.innerHTML = `<h3>${n.title}</h3><p>${n.date}</p><p>${n.content}</p>`;
+    if (n.images) {
+      n.images.forEach(img => {
+        const src = typeof img === 'string' ? img : img.image;
+        el.innerHTML += `<img src="${prefix}${src.replace(/^\//,'')}" style="max-width:100%;margin:8px 0;">`;
+      });
+    }
+    root.appendChild(el);
+  });
+})();
+</script>
 
 </body>
 </html>
