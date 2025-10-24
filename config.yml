@@ -4,7 +4,7 @@ backend:
   repo: your-username/your-repo  # ← 깃허브 사용자/저장소로 바꾸세요
   branch: main
   # GitHub OAuth 프록시를 쓰는 경우:
-  base_url: https://netlify-cms.adrianub.vercel.app
+  base_url: https://bringup.vercel.app/
   auth_endpoint: /auth
 media_folder: "media"
 public_folder: "/media"
