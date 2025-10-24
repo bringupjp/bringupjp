@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: eunhyekim516/bring-up-japan-site
+  repo: bringupjp/bringupjp
   branch: main
   base_url: https://bringup.vercel.app
   auth_endpoint: /auth
@@ -8,7 +8,7 @@ backend:
 media_folder: "media"
 public_folder: "/media"
 locale: "ja"
-site_url: "https://eunhyekim516.github.io/bring-up-japan-site/"
+site_url: "https://bringupjp.github.io/bringupjp/"
 
 collections:
   - name: "site"
