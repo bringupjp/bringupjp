@@ -50,8 +50,8 @@
       },
       "content": "内容：食事、マジックショーまたはお楽しみ会。帰りに手土産がある場合もあります。",
       "images": [
-        "/media/img-001.jpg",
-        "/media/img-002.jpg"
+        "https://bringupjp.com/media/img-001.jpg",
+        "https://bringupjp.com/media/img-002.jpg"
       ]
     },
     {
@@ -64,8 +64,8 @@
       },
       "content": "内容：健康体操、脳トレーニング、クラフト、回想法など。福祉会館から認知予防リーダーが派遣されます。",
       "images": [
-        "/media/img-003.jpg",
-        "/media/img-004.jpg"
+        "https://bringupjp.com/media/img-003.jpg",
+        "https://bringupjp.com/media/img-004.jpg"
       ]
     },
     {
@@ -78,8 +78,8 @@
       },
       "content": "内容：食事、ちょっとした活動。トーク、ミニバザー、クラフトなど。近隣のお母さんたちがママ友になり、情報交換ができます。",
       "images": [
-        "/media/img-005.jpg",
-        "/media/img-006.jpg"
+        "https://bringupjp.com/media/img-005.jpg",
+        "https://bringupjp.com/media/img-006.jpg"
       ]
     },
     {
@@ -90,8 +90,8 @@
       },
       "content": "内容：自分でロボットを組み立てて、パソコンでプログラミングをし、実際に動かして見る。",
       "images": [
-        "/media/img-007.jpg",
-        "/media/img-008.jpg"
+        "https://bringupjp.com/media/img-007.jpg",
+        "https://bringupjp.com/media/img-008.jpg"
       ]
     },
     {
@@ -103,8 +103,8 @@
       },
       "content": "内容：地域でホームレスのために働いているところを協力、支援しています。",
       "images": [
-        "/media/img-009.jpg",
-        "/media/img-010.jpg"
+        "https://bringupjp.com/media/img-009.jpg",
+        "https://bringupjp.com/media/img-010.jpg"
       ]
     }
   ],
