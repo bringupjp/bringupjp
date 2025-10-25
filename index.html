@@ -860,33 +860,6 @@
   document.addEventListener('DOMContentLoaded', loadDataAndRender);
 })();
 </script>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  // 현재 repo 이름 자동 계산 (/bringupjp/ 등)
-  const BASE_PATH = (location.pathname.match(/^\/[^/]+\//) || ['/'])[0];
-  
-  const images = {
-    "img-001": "media/img-001.jpg",
-    "img-002": "media/img-002.jpg",
-    "img-003": "media/img-003.jpg",
-    "img-004": "media/img-004.jpg",
-    "img-005": "media/img-005.jpg",
-    "img-006": "media/img-006.jpg",
-    "img-007": "media/img-007.jpg",
-    "img-008": "media/img-008.jpg",
-    "img-009": "media/img-009.jpg",
-    "img-010": "media/img-010.jpg"
-  };
 
-  Object.entries(images).forEach(([id, src]) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.style.backgroundImage = `url('${BASE_PATH}${src}')`;
-      el.style.backgroundSize = "cover";
-      el.style.backgroundPosition = "center";
-    }
-  });
-});
-</script>
 </body>
 </html>
