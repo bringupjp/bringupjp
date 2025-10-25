@@ -853,6 +853,26 @@
   document.addEventListener('DOMContentLoaded', loadDataAndRender);
 })();
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const images = {
+    "img-001": "/bringupjp/media/img-001.jpg",
+    "img-002": "/bringupjp/media/img-002.jpg",
+    "img-003": "/bringupjp/media/img-003.jpg",
+    "img-004": "/bringupjp/media/img-004.jpg",
+    "img-005": "/bringupjp/media/img-005.jpg",
+    "img-006": "/bringupjp/media/img-006.jpg"
+  };
 
+  Object.entries(images).forEach(([id, src]) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.style.backgroundImage = `url('${src}')`;
+      el.style.backgroundSize = "cover";
+      el.style.backgroundPosition = "center";
+    }
+  });
+});
+</script>
 </body>
 </html>
