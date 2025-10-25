@@ -736,6 +736,25 @@
 
 <!-- ===== JSON-driven rendering for Activities & News ===== -->
 <script>
+// 🔹 여기에 새로 추가할 부분 시작
+// 배포 서브경로 자동 계산 (/bringupjp/ 대응)
+const SITE_ROOT = (location.pathname.match(/^\/[^/]+\//) || ['/'])[0];
+
+// JSON의 값(문자열 또는 {image:…})을 안전하게 src로 변환
+function resolveSrc(entry) {
+  if (!entry) return null;
+  const raw = (typeof entry === 'string') ? entry : (entry.image || entry.src || '');
+  if (!raw) return null;
+  if (/^https?:\/\//i.test(raw)) return raw;                 // 절대 URL
+  if (raw.startsWith('/bringupjp/')) return raw;              // 이미 풀경로
+  if (raw.startsWith('/media/')) return SITE_ROOT + raw.slice(1); // /media/… → /bringupjp/media/…
+  // 그 외엔 media 아래로 가정
+  return SITE_ROOT + 'media/' + raw.replace(/^\//, '');
+}
+// 🔹 여기까지 새로 추가
+</script>
+    
+<script>
 (async function(){
   async function loadDataAndRender() {
     try {
