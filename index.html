@@ -623,12 +623,6 @@
             <div class="news-card">
                 <div class="news-date">2025年10月22日</div>
                 <h3 class="news-title"><i class="fas fa-bell"></i> 第5回 ママCaféグレース開催</h3>
-
-                <!-- 📸 이미지 추가 -->
-                <div class="news-image">
-                <img src="media/img_0123.jpg" alt="ママCaféグレース" />
-                </div>
-                
                 <p class="news-content">今月のママCaféグレースを開催いたします。近隣のお母さんたちとの交流と情報交換の場として、皆様のご参加をお待ちしています。</p>
                 <div class="news-details">
                     <span><strong>時間：</strong> AM 11:30～PM 2:00</span> | 
@@ -791,14 +785,27 @@
       }
 
       const gal = document.createElement('div');
-      gal.className = 'image-gallery';
-      (act.images || []).forEach(id=>{
-        const wrap = document.createElement('div');
-        wrap.className = 'gallery-image';
-        wrap.id = id;
-        gal.appendChild(wrap);
-      });
-      card.appendChild(gal);
+        gal.className = 'image-gallery';
+        
+        (act.images || []).forEach(entry => {
+          const src = resolveSrc(entry);
+          if (!src) return;
+        
+          const wrap = document.createElement('div');
+          wrap.className = 'gallery-image';
+        
+          // <img>로 직접 렌더 (배경이미지 대신)
+          const img = document.createElement('img');
+          img.src = src;
+          img.alt = act.title || 'activity image';
+          img.loading = 'lazy';
+        
+          wrap.appendChild(img);
+          gal.appendChild(wrap);
+        });
+
+        card.appendChild(gal);
+
 
       section.appendChild(card);
     });
